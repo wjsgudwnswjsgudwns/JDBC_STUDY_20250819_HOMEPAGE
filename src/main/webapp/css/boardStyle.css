@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+:root{
+  --bg:#ffffff;            /* white base */
+  --panel:#ffffff;         /* cards/panels */
+  --fg:#121212;            /* primary text (near black) */
+  --muted:#6b7280;         /* secondary text */
+  --line:#e5e7eb;          /* borders/dividers */
+  --accent:#000000;        /* buttons/links emphasis (black) */
+  --shadow:0 8px 24px rgba(0,0,0,.08);
+  --radius:14px;
+  --radius-sm:10px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Apple SD Gothic Neo, Helvetica, Arial;
+  letter-spacing:.2px;
+}
+
+.wrap{max-width:1080px; margin:40px auto; padding:0 20px}
+
+/* Header */
+.board-head{display:grid; gap:18px; align-items:center; grid-template-columns:1fr}
+@media(min-width:760px){.board-head{grid-template-columns:1fr auto auto}}
+.title{font-weight:800; font-size:clamp(24px,3.2vw,34px); letter-spacing:.4px; margin:0}
+.subtitle{margin:0; color:var(--muted); font-size:14px}
+.actions{display:flex; gap:10px; justify-content:flex-start}
+
+/* Inputs & Buttons */
+.btn,.input{border:1px solid var(--line); background:var(--panel); color:var(--fg); padding:12px 14px; border-radius:var(--radius-sm); outline:none; transition:.2s ease}
+.input{min-width:240px}
+.input::placeholder{color:#9aa3af}
+.input:focus{border-color:#cbd5e1; box-shadow:0 0 0 3px rgba(0,0,0,.06)}
+.btn{font-weight:700; cursor:pointer; user-select:none;}
+.btn.primary{background:var(--accent); color:#ffffff; border-color:transparent}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+
+/* Board/Card */
+.board{margin-top:22px; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+
+/* Table */
+table{width:100%; border-collapse:separate; border-spacing:0; background:var(--panel)}
+thead th{text-align:left; font-size:13px; letter-spacing:.8px; text-transform:uppercase; color:#1f2937; background:#f7f7f8; position:sticky; top:0; z-index:1; border-bottom:1px solid var(--line); padding:14px 16px}
+tbody tr{border-bottom:1px solid var(--line)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(0,0,0,.03)}
+td{padding:16px; vertical-align:middle}
+
+.col-no{width:82px; color:#4b5563}
+.col-title{font-weight:600}
+.title-link{color:inherit; text-decoration:none}
+.title-link:hover{text-decoration:underline}
+.badge{display:inline-block; margin-left:8px; padding:2px 8px; font-size:12px; border:1px solid var(--line); border-radius:999px; color:#374151; background:#fafafa}
+.col-author{color:#4b5563}
+.col-date{color:#4b5563; width:160px}
+.col-views{color:#4b5563; width:100px; text-align:right}
+
+/* Pagination */
+.pager{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:18px}
+.page{min-width:38px; height:38px; display:inline-grid; place-items:center; border:1px solid var(--line); border-radius:10px; text-decoration:none; color:var(--fg); background:#ffffff}
+.page[aria-current="page"]{background:var(--accent); color:#ffffff; font-weight:800; border-color:transparent}
+.page:hover{transform:translateY(-1px)}
+
+/* Mobile: table as cards */
+@media(max-width:760px){
+  thead{display:none}
+  table,tbody,tr,td{display:block; width:100%}
+  tbody tr{border:1px solid var(--line); border-radius:12px; margin:12px 12px; overflow:hidden; background:#ffffff}
+  td{border-bottom:1px dashed var(--line)}
+  td:last-child{border-bottom:none}
+  td[data-label]::before{content:attr(data-label); display:block; font-size:12px; text-transform:uppercase; color:#6b7280; margin-bottom:6px; letter-spacing:.6px}
+  .col-views{text-align:left}
+  .col-no{width:auto}
+}
+
+/* Empty state */
+.empty{padding:50px 20px; text-align:center; color:#6b7280}
+.empty .ghost{font-size:40px; line-height:1}
