@@ -17,23 +17,20 @@
       <p class="subtitle">글 수정하기</p>
     </header>
 
-    <form class="edit-form">
+    <form class="edit-form" action="modifyOk.do" method="post">
+    	<input type="hidden" name="bnum" value="${boardDto.bnum}">
       <div class="form-group">
         <label for="title">제목</label>
-        <input type="text" id="title" name="title" value="첫 번째 글" required>
+        <input type="text" id="title" name="title" value="${boardDto.btitle}" required>
       </div>
 
       <div class="form-group">
         <label for="content">내용</label>
-        <textarea id="content" name="content" rows="10" required>
-        	안녕하세요 😊
-			이곳은 첫 번째 글의 수정 화면입니다.
-			내용을 변경해 보세요.
-		</textarea>
+        <textarea id="content" name="content" rows="10" required>${boardDto.bcontent}</textarea>
       </div>
 
       <div class="form-footer">
-        <a href="delete.do" class="btn">취소</a>
+        <a href="javascript:history.go(-1);" class="btn">취소</a>
         <button type="submit" class="btn primary">저장하기</button>
       </div>
     </form>

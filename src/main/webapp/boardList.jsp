@@ -19,7 +19,15 @@
 				<div>
 					<h1 class="title">자유 게시판</h1>
 					<p class="subtitle">자유 게시판</p>
+					
+					<span class="subtitle">
+						<c:if test="${not empty sessionScope.sessionId}">
+							${sessionScope.sessionId}님 로그인중
+						</c:if>
+					</span>
 				</div>
+				
+				
 				<div class="actions">
 					<input class="input" type="search" placeholder="검색어를 입력하세요" aria-label="게시글 검색">
 					<button class="btn">검색</button>

@@ -158,4 +158,70 @@ public class BoardDao {
 			}
 			return boardDto;
 		}
+		
+		public void boardUpdate(String bnum, String btitle, String bcontent) { // 글 수정 업데이트
+			
+			String sql = "UPDATE board SET btitle=? , bcontent=? WHERE bnum = ?";
+			
+			try {
+				Class.forName(driverName); // MySQL 드라이버 클래스 불러오기
+				
+				conn = DriverManager.getConnection(url, username, password); // 커넥션이 메모리에 생성(DB와 연결 커넥션 conn 생성)
+				
+				pstmt = conn.prepareStatement(sql); // pstmt 인스턴스화
+				
+				pstmt.setString(1, btitle);
+				pstmt.setString(2, bcontent);
+				pstmt.setString(3, bnum);
+				
+				pstmt.executeUpdate(); //
+		
+			} catch (Exception e){
+				System.out.println("DB 에러 발생.");
+				e.printStackTrace();
+			} finally { // 에러 발생여부와 상관없이 Connection 닫기 실행
+				try {
+					if(pstmt != null) { // pstmt가 null이 아니면 닫기. conn 닫기보다 먼저 실행 되어야만 함
+						pstmt.close();
+					}
+					if (conn != null) { // Connection이 null이 아닐때만 닫기 실행
+						conn.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		public void boardDelete(String bnum) { // 글 수정 업데이트
+			
+			String sql = "DELETE FROM board WHERE bnum = ?";
+			
+			try {
+				Class.forName(driverName); // MySQL 드라이버 클래스 불러오기
+				
+				conn = DriverManager.getConnection(url, username, password); // 커넥션이 메모리에 생성(DB와 연결 커넥션 conn 생성)
+				
+				pstmt = conn.prepareStatement(sql); // pstmt 인스턴스화
+			
+				pstmt.setString(1, bnum);
+				
+				pstmt.executeUpdate(); //
+		
+			} catch (Exception e){
+				System.out.println("DB 에러 발생.");
+				e.printStackTrace();
+			} finally { // 에러 발생여부와 상관없이 Connection 닫기 실행
+				try {
+					if(pstmt != null) { // pstmt가 null이 아니면 닫기. conn 닫기보다 먼저 실행 되어야만 함
+						pstmt.close();
+					}
+					if (conn != null) { // Connection이 null이 아닐때만 닫기 실행
+						conn.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 }

@@ -3,7 +3,7 @@
 <%
 	if( request.getAttribute("msg") != null ){
 		String msgInfo = request.getAttribute("msg").toString();
-		out.println("<script>alert('"+msgInfo+"');window.location.href('boardlist.do');</script>");
+		out.println("<script>alert('"+msgInfo+"');window.location.href='boardList.do';</script>");
 	}
 %>
 <!DOCTYPE html>
@@ -37,8 +37,8 @@
 
       <footer class="post-footer">
         <a href="boardList.do" class="btn">목록으로</a>
-        <a href="#" class="btn primary">수정</a>
-        <a href="#" class="btn danger">삭제</a>
+        <a href="modify.do?bnum=${boardDto.bnum}" class="btn primary">수정</a>
+        <a href="delete.do?bnum=${boardDto.bnum}" class="btn danger">삭제</a>
       </footer>
     </article>
   </div>

@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #000000;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* Login Card */
+.login-wrap {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+.login-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+}
+.login-title {
+  margin: 0 0 24px;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Form */
+.login-form .form-group { margin-bottom: 20px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; }
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border .2s, box-shadow .2s;
+}
+input:focus {
+  border-color: #cbd5e1;
+  box-shadow: 0 0 0 3px rgba(0,0,0,.05);
+  outline: none;
+}
+.btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform .2s;
+}
+.btn.primary { background: var(--accent); color: #fff; }
+.btn:hover { transform: translateY(-2px); }
+
+/* Footer */
+.login-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.login-footer a {
+  color: var(--fg);
+  text-decoration: none;
+}
+.login-footer a:hover {
+  text-decoration: underline;
+}

@@ -15,7 +15,7 @@
       <nav class="nav">
         <a href="index.jsp" class="active">홈</a>
         <a href="boardList.do">자유게시판</a>
-        <a href="#">앨범 리뷰</a>
+        <a href="login.do">로그인</a>
         <a href="#">공지사항</a>
       </nav>
     </div>
