@@ -51,13 +51,21 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("bDtos", bDtos);
 			viewPage = "boardList.jsp";
 		} else if(comm.equals("/modify.do")) {	// 글 수정
+			session = request.getSession();
+			String sid = (String)session.getAttribute("sessionId");
+			
 			String bnum = request.getParameter("bnum");
 			
 			BoardDto boardDto = boardDao.contentView(bnum);
 			
-			request.setAttribute("boardDto", boardDto);
-			
-			viewPage = "modify.jsp";
+			if(boardDto.getMemberid().equals(sid)) {
+				request.setAttribute("boardDto", boardDto);
+				
+				viewPage = "modify.jsp";
+			} else {
+				response.sendRedirect("login.do?msg=2");
+				return;
+			}
 		} else if(comm.equals("/modifyOk.do")) { // 글 수정 후 리스트로 이동 
 			request.setCharacterEncoding("UTF-8");
 			

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%
 	if( request.getAttribute("msg") != null ){
 		String msgInfo = request.getAttribute("msg").toString();
@@ -37,8 +38,10 @@
 
       <footer class="post-footer">
         <a href="boardList.do" class="btn">목록으로</a>
-        <a href="modify.do?bnum=${boardDto.bnum}" class="btn primary">수정</a>
-        <a href="delete.do?bnum=${boardDto.bnum}" class="btn danger">삭제</a>
+        <c:if test="${sessionScope.sessionId == boardDto.memberid}">
+	        <a href="modify.do?bnum=${boardDto.bnum}" class="btn primary">수정</a>
+	        <a href="delete.do?bnum=${boardDto.bnum}" class="btn danger">삭제</a>
+        </c:if>
       </footer>
     </article>
   </div>
