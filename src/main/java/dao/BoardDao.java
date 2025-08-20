@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.BoardDto;
+import dto.BoardMemberDto;
+import dto.MemberDto;
 
 public class BoardDao {
 	
@@ -23,8 +25,11 @@ public class BoardDao {
 		
 		public List<BoardDto> boardList() { // 게시판의 모든 글 리스트 가져오는 메소드
 			
-			String sql = "SELECT * FROM board ORDER BY bnum DESC";
-			List<BoardDto> bDtos = new ArrayList<BoardDto>(); 
+			//String sql = "SELECT * FROM board ORDER BY bnum DESC";
+			String sql = "SELECT b.bnum, b.btitle, b.bcontent ,b.memberid, m.memberemail, b.bdate, b.bhit FROM board b INNER JOIN members m ON b.memberid = m.memberid ORDER BY bnum DESC";
+			
+			List<BoardDto> bDtos = new ArrayList<BoardDto>();
+			//List<BoardMemberDto> bmDtos = new ArrayList<BoardMemberDto>(); 
 			
 			try {
 				Class.forName(driverName); // MySQL 드라이버 클래스 불러오기
@@ -43,9 +48,17 @@ public class BoardDao {
 					int bhit = rs.getInt("bhit");
 					String bdate = rs.getString("bdate");
 					
-					BoardDto bDto = new BoardDto(bnum, btitle, bcontent, memberid, bhit, bdate);
+					String memeberemail = rs.getString("memberemail");
 					
+					MemberDto memberDto = new MemberDto();
+					memberDto.setMemberid(memberid);
+					memberDto.setMemberemail(memeberemail);
+					
+					BoardDto bDto = new BoardDto(bnum, btitle, bcontent, memberid, bhit, bdate, memberDto);
 					bDtos.add(bDto);
+					
+					//BoardDto bmDto = new BoardDto(bnum, btitle, bcontent, memberid, memeberemail, bhit, bdate);
+					//bmDtos.add(bmDto);
 				}
 				
 

@@ -44,6 +44,7 @@
 						<th scope="col" class="col-no" style="text-align:center">번호</th>
 						<th scope="col" style="text-align:center">제목</th>
 						<th scope="col" style="text-align:center">작성자</th>
+						<th scope="col" style="text-align:center">이메일</th>
 						<th scope="col" style="text-align:center">작성일</th>
 						<th scope="col" style="text-align:center">조회</th>
 					</tr>
@@ -51,8 +52,8 @@
 				<tbody>
 					<c:forEach items="${bDtos}" var="bDto">
 					<tr>
-						<td style="text-align:center">${bDto.bnum}</td>
-						<td style="text-align:center">
+						<td style="text-align:center">${bDto.bnum}</td> <!-- 번호 -->
+						<td style="text-align:center"> <!-- 제목 -->
 						
 							<c:choose>
 								<c:when test="${fn:length(bDto.btitle) > 25}">
@@ -65,9 +66,10 @@
 							</c:choose>
 						
 						</td>
-						<td style="text-align:center">${bDto.memberid}</td>
-						<td style="text-align:center">${fn:substring(bDto.bdate,0,10)}</td>
-						<td style="text-align:center">${bDto.bhit}</td>
+						<td style="text-align:center">${bDto.memberid}</td> <!-- 작성자 -->
+						<td style="text-align:center">${bDto.memberDto.memberemail}</td> <!-- 이메일 -->
+						<td style="text-align:center">${fn:substring(bDto.bdate,0,10)}</td> <!-- 날짜 -->
+						<td style="text-align:center">${bDto.bhit}</td> <!-- 조회수 -->
 					</tr>
 				</c:forEach>
 				</tbody>

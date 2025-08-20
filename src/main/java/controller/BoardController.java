@@ -15,6 +15,7 @@ import java.util.List;
 import dao.BoardDao;
 import dao.MemberDao;
 import dto.BoardDto;
+import dto.BoardMemberDto;
 
 
 @WebServlet("*.do")
@@ -42,7 +43,9 @@ public class BoardController extends HttpServlet {
 		String viewPage = null;
 		MemberDao memberDao = new MemberDao();
 		BoardDao boardDao = new BoardDao();
+		BoardMemberDto boardMemberDto = new BoardMemberDto();
 		List<BoardDto> bDtos = new ArrayList<BoardDto>();
+		List<BoardMemberDto> bmDtos = new ArrayList<BoardMemberDto>();
 		HttpSession session = null;
 		
 		
