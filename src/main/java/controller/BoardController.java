@@ -56,8 +56,7 @@ public class BoardController extends HttpServlet {
 						
 			String bnum = request.getParameter("bnum");
 			
-			BoardDao boardDao = new BoardDao();
-			BoardDto boardDto = boardDao.contentView(bnum);
+			BoardDto boardDto = bDao.contentView(bnum);
 			
 			if(boardDto == null) {
 				request.setAttribute("msg", "존재하지 않는 글입니다.");
@@ -77,7 +76,9 @@ public class BoardController extends HttpServlet {
 			
 			response.sendRedirect("boardList.do"); // 포워딩을 하지 않고 강제로 boardList.do로 이동
 			return;
-		} 
+		} else {
+			viewPage = "index.jsp";
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
