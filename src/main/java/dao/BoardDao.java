@@ -107,7 +107,7 @@ public class BoardDao {
 		public BoardDto contentView(String bnum) { // 선택한 글 보기
 			
 			String sql = "SELECT bnum,btitle,memberid,bdate,bhit,bcontent FROM board WHERE bnum=?"; 
-			BoardDto boardDto = new BoardDto();
+			BoardDto boardDto = null;
 			
 			try {
 				Class.forName(driverName); // MySQL 드라이버 클래스 불러오기

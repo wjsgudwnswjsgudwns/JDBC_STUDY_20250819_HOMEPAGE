@@ -60,10 +60,10 @@ public class BoardController extends HttpServlet {
 			BoardDto boardDto = boardDao.contentView(bnum);
 			
 			if(boardDto == null) {
-				request.setAttribute("msg", "1");
-			} else {
-				request.setAttribute("boardDto", boardDto);
+				request.setAttribute("msg", "존재하지 않는 글입니다.");
 			}
+			request.setAttribute("boardDto", boardDto);
+			
 			
 			viewPage = "contentView.jsp";
 		} else if(comm.equals("/writeOk.do")) {	// 선택 글 보기
@@ -75,7 +75,8 @@ public class BoardController extends HttpServlet {
 			
 			bDao.boardWrite(btitle, memberid, bcontent); // DB에 새글 입력
 			
-			viewPage = "boardList.do";
+			response.sendRedirect("boardList.do"); // 포워딩을 하지 않고 강제로 boardList.do로 이동
+			return;
 		} 
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
