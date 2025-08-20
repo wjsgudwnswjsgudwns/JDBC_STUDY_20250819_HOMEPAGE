@@ -52,12 +52,18 @@ public class BoardController extends HttpServlet {
 		} else if(comm.equals("/delete.do")) {	// 글 삭제 후 글 목록
 			viewPage = "boardList.do";
 		} else if(comm.equals("/contentView.do")) {	// 선택 글 보기
+						
+						
 			String bnum = request.getParameter("bnum");
 			
 			BoardDao boardDao = new BoardDao();
 			BoardDto boardDto = boardDao.contentView(bnum);
 			
-			request.setAttribute("boardDto", boardDto);
+			if(boardDto == null) {
+				request.setAttribute("msg", "1");
+			} else {
+				request.setAttribute("boardDto", boardDto);
+			}
 			
 			viewPage = "contentView.jsp";
 		} else if(comm.equals("/writeOk.do")) {	// 선택 글 보기

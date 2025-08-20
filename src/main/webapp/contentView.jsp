@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	if( request.getAttribute("msg") != null ){
+		out.println("<script>alert('존재하지 않는 글입니다.');window.location.href('boardlist.do');</script>");
+	}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
