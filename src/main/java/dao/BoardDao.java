@@ -19,14 +19,18 @@ public class BoardDao {
 	private String username ="root";
 	private String password = "12345";
 	
+	public static final int PAGE_SIZE = 10; // 페이지당 출력할 글의 갯수
+	
 	Connection conn = null; // 커넥션 인터페이스를 선언 후 null로 초기화
 	PreparedStatement pstmt = null; // SQL 실행문 객체
 	ResultSet rs = null;
 		
-	public List<BoardDto> boardList() { // 게시판의 모든 글 리스트 가져오는 메소드
+	public List<BoardDto> boardList(int page) { // 게시판의 모든 글 리스트 가져오는 메소드
+		// page 값의 해당하는 글 번호 계산
+		int offset = (page - 1) * PAGE_SIZE;
 		
 		//String sql = "SELECT * FROM board ORDER BY bnum DESC";
-		String sql = "SELECT ROW_NUMBER() OVER(ORDER BY bnum ASC) AS bno, b.bnum, b.btitle, b.bcontent ,b.memberid, m.memberemail, b.bdate, b.bhit FROM board b LEFT JOIN members m ON b.memberid = m.memberid ORDER BY bnum DESC";
+		String sql = "SELECT ROW_NUMBER() OVER(ORDER BY bnum ASC) AS bno, b.bnum, b.btitle, b.bcontent ,b.memberid, m.memberemail, b.bdate, b.bhit FROM board b LEFT JOIN members m ON b.memberid = m.memberid ORDER BY bnum DESC LIMIT ? OFFSET ?";
 		
 		List<BoardDto> bDtos = new ArrayList<BoardDto>();
 		//List<BoardMemberDto> bmDtos = new ArrayList<BoardMemberDto>(); 
@@ -37,6 +41,8 @@ public class BoardDao {
 			conn = DriverManager.getConnection(url, username, password); // 커넥션이 메모리에 생성(DB와 연결 커넥션 conn 생성)
 			
 			pstmt = conn.prepareStatement(sql); // pstmt 인스턴스화
+			pstmt.setInt(1, PAGE_SIZE);
+			pstmt.setInt(2, offset);
 			
 			rs = pstmt.executeQuery(); //
 			
@@ -86,10 +92,11 @@ public class BoardDao {
 	}
 	
 	
-	public List<BoardDto> searchBoardList(String searchKeyword, String searchType) { // 게시판에서 검색
+	public List<BoardDto> searchBoardList(String searchKeyword, String searchType, int page) { // 게시판에서 검색
+		// page 값의 해당하는 글 번호 계산
+		int offset = (page - 1) * PAGE_SIZE;
 		
-		//String sql = "SELECT * FROM board ORDER BY bnum DESC";
-		String sql = "SELECT ROW_NUMBER() OVER(ORDER BY bnum ASC) AS bno, b.bnum, b.btitle, b.bcontent ,b.memberid, m.memberemail, b.bdate, b.bhit FROM board b LEFT JOIN members m ON b.memberid = m.memberid WHERE " + searchType + " LIKE ? ORDER BY bnum DESC";
+		String sql = "SELECT ROW_NUMBER() OVER(ORDER BY bnum ASC) AS bno, b.bnum, b.btitle, b.bcontent ,b.memberid, m.memberemail, b.bdate, b.bhit FROM board b LEFT JOIN members m ON b.memberid = m.memberid WHERE " + searchType + " LIKE ? ORDER BY bnum DESC LIMIT ? OFFSET ?";
 		
 		List<BoardDto> bDtos = new ArrayList<BoardDto>();
 		//List<BoardMemberDto> bmDtos = new ArrayList<BoardMemberDto>(); 
@@ -101,6 +108,8 @@ public class BoardDao {
 			
 			pstmt = conn.prepareStatement(sql); // pstmt 인스턴스화
 			pstmt.setString(1, "%"+searchKeyword+"%");
+			pstmt.setInt(2, PAGE_SIZE);
+			pstmt.setInt(3, offset);
 			
 			rs = pstmt.executeQuery(); //
 			
@@ -148,6 +157,47 @@ public class BoardDao {
 		}
 		return bDtos;
 	}
+	
+	public int countBoard() { // 게시판 모든 글의 갯수를 반환
+		String sql = "SELECT * FROM board";
+		
+		int count = 0;
+		
+		try {
+			Class.forName(driverName); //MySQL 드라이버 클래스 불러오기			
+			conn = DriverManager.getConnection(url, username, password);
+			//커넥션이 메모리 생성(DB와 연결 커넥션 conn 생성)
+			
+			pstmt = conn.prepareStatement(sql); //pstmt 객체 생성(sql 삽입)			
+
+			rs = pstmt.executeQuery(); //모든 글 리스트(모든 레코드) 반환
+			
+			while(rs.next()) {
+				count++;
+			}	
+			
+		} catch (Exception e) {
+			System.out.println("DB 에러 발생!");
+			e.printStackTrace(); //에러 내용 출력
+		} finally { //에러의 발생여부와 상관 없이 Connection 닫기 실행 
+			try {
+				if(rs != null) { //rs가 null 이 아니면 닫기(pstmt 닫기 보다 먼저 실행)
+					rs.close();
+				}				
+				if(pstmt != null) { //stmt가 null 이 아니면 닫기(conn 닫기 보다 먼저 실행)
+					pstmt.close();
+				}				
+				if(conn != null) { //Connection이 null 이 아닐 때만 닫기
+					conn.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		
+		}
+	return count;
+	}
+	
 	
 	
 	public void boardWrite(String btitle, String memberid, String bcontent) { // 게시판의 모든 글 리스트 가져오는 메소드

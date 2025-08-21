@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>자유 게시판</title>
-<link rel="stylesheet" href="css/boardStyle.css" />
+<link rel="stylesheet" href="css/boardStyle2.css" />
 </head>
 
 	<body>
@@ -91,9 +91,40 @@
 		-->
 		
 		
-		<nav class="pager" aria-label="페이지 네비게이션">
-		<a href="#" class="page" aria-label="이전 페이지">‹</a>
-		<a href="#" class="page" aria-current="page">1</a>
-		<a href="#" class="page">2</a>
+		<!-- 1 페이지로 이동 -->
+	<div class="pagination">
+    <!-- 첫 페이지 -->
+    <c:if test="${currentPage > 1}">
+        <a href="boardList.do?page=1" class="prev">◀◀</a>
+    </c:if>
+
+    <!-- 이전 그룹 -->
+    <c:if test="${startPage > 1}">
+        <a href="boardList.do?page=${startPage - 1}" class="prev">◀</a>
+    </c:if>
+
+    <!-- 페이지 번호 반복 -->
+    <c:forEach begin="${startPage}" end="${endPage}" var="i">
+        <c:choose>
+            <c:when test="${currentPage == i}">
+                <a href="boardList.do?page=${i}" class="current">${i}</a>
+            </c:when>
+            <c:otherwise>
+                <a href="boardList.do?page=${i}">${i}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <!-- 다음 그룹 -->
+    <c:if test="${endPage < totalPage}">
+        <a href="boardList.do?page=${endPage + 1}" class="next">▶</a>
+    </c:if>
+
+    <!-- 마지막 페이지 -->
+    <c:if test="${currentPage < totalPage}">
+        <a href="boardList.do?page=${totalPage}" class="next">▶▶</a>
+    </c:if>
+	</div>
+
 	</body>
 </html>

@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@charset "UTF-8";
+
 :root{
   --bg:#ffffff;            /* white base */
   --panel:#ffffff;         /* cards/panels */
@@ -61,22 +63,6 @@ td{padding:16px; vertical-align:middle}
 .col-date{color:#4b5563; width:160px}
 .col-views{color:#4b5563; width:100px; text-align:right}
 
-/* Mobile: table as cards */
-@media(max-width:760px){
-  thead{display:none}
-  table,tbody,tr,td{display:block; width:100%}
-  tbody tr{border:1px solid var(--line); border-radius:12px; margin:12px 12px; overflow:hidden; background:#ffffff}
-  td{border-bottom:1px dashed var(--line)}
-  td:last-child{border-bottom:none}
-  td[data-label]::before{content:attr(data-label); display:block; font-size:12px; text-transform:uppercase; color:#6b7280; margin-bottom:6px; letter-spacing:.6px}
-  .col-views{text-align:left}
-  .col-no{width:auto}
-}
-
-/* Empty state */
-.empty{padding:50px 20px; text-align:center; color:#6b7280}
-.empty .ghost{font-size:40px; line-height:1}
-
 /* Pagination */
 .pagination {
   display: flex;
@@ -119,3 +105,19 @@ td{padding:16px; vertical-align:middle}
   transform: none;
   box-shadow: none;
 }
+
+/* Mobile: table as cards */
+@media(max-width:760px){
+  thead{display:none}
+  table,tbody,tr,td{display:block; width:100%}
+  tbody tr{border:1px solid var(--line); border-radius:12px; margin:12px 12px; overflow:hidden; background:#ffffff}
+  td{border-bottom:1px dashed var(--line)}
+  td:last-child{border-bottom:none}
+  td[data-label]::before{content:attr(data-label); display:block; font-size:12px; text-transform:uppercase; color:#6b7280; margin-bottom:6px; letter-spacing:.6px}
+  .col-views{text-align:left}
+  .col-no{width:auto}
+}
+
+/* Empty state */
+.empty{padding:50px 20px; text-align:center; color:#6b7280}
+.empty .ghost{font-size:40px; line-height:1}
