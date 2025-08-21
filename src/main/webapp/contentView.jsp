@@ -26,8 +26,9 @@
       <header class="post-header">
         <h2 class="post-title">${boardDto.btitle}</h2>
         <div class="post-meta">
-          <span class="author">작성자: ${boardDto.memberid}</span>
-          <span class="date">${boardDto.bdate}</span>
+          <span class="author">작성자: ${boardDto.memberid} |</span>
+          <span class="author">이메일: ${boardDto.memberDto.memberemail} |</span>
+          <span class="date">${boardDto.bdate} |</span>
           <span class="views">조회수: ${boardDto.bhit}</span>
         </div>
       </header>

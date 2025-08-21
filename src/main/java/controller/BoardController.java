@@ -50,7 +50,15 @@ public class BoardController extends HttpServlet {
 		
 		
 		if(comm.equals("/boardList.do")) {	// 글 목록
-			bDtos = boardDao.boardList();
+			String searchType = request.getParameter("searchType");
+			String searchKeyword = request.getParameter("searchKeyword");
+			
+			if(searchType != null && searchKeyword != null && !searchKeyword.strip().isEmpty()) {
+				bDtos = boardDao.searchBoardList(searchKeyword, searchType);
+			} else { // boardList.do로 넘어온 경우 -> 모든 게시판 리스트
+				bDtos = boardDao.boardList();
+			}
+			
 			request.setAttribute("bDtos", bDtos);
 			viewPage = "boardList.jsp";
 		} else if(comm.equals("/modify.do")) {	// 글 수정
@@ -89,6 +97,9 @@ public class BoardController extends HttpServlet {
 			viewPage = "boardList.do";
 		} else if(comm.equals("/contentView.do")) {	// 선택 글 보기			
 			String bnum = request.getParameter("bnum");
+			
+			//조회수 올려주는 메소드 호출
+			boardDao.updateBhit(bnum);
 			
 			BoardDto boardDto = boardDao.contentView(bnum);
 			

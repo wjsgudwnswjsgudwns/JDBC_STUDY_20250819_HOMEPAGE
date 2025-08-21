@@ -27,11 +27,17 @@
 					</span>
 				</div>
 				
-				
+				<form action="boardList.do" method="get">
 				<div class="actions">
-					<input class="input" type="search" placeholder="검색어를 입력하세요" aria-label="게시글 검색">
-					<button class="btn">검색</button>
+					<select name="searchType">
+						<option value="btitle">제목</option>
+						<option value="bcontent">내용</option>
+						<option value="b.memberid">작성자</option>
+					</select>
+					<input class="input" type="search" placeholder="검색어를 입력하세요" aria-label="게시글 검색" name="searchKeyword">
+					<input class="btn" type="submit" value="검색">
 				</div>
+				</form>
 				<div class="actions">
 					<button class="btn primary"><a href="write.do">+ 새 글</a></button>
 				</div>
@@ -52,7 +58,7 @@
 				<tbody>
 					<c:forEach items="${bDtos}" var="bDto">
 					<tr>
-						<td style="text-align:center">${bDto.bnum}</td> <!-- 번호 -->
+						<td style="text-align:center">${bDto.bno}</td> <!-- 번호 -->
 						<td style="text-align:center"> <!-- 제목 -->
 						
 							<c:choose>
