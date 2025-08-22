@@ -106,7 +106,7 @@
     <!-- 페이지 번호 반복 -->
     <c:forEach begin="${startPage}" end="${endPage}" var="i">
         <c:choose>
-            <c:when test="${currentPage == i}">
+            <c:when test="${currentPage == i}"> <!-- 현재 보고 있는 페이지의 번호를 표시하기 위해 하이라이트 표시 -->
                 <a href="boardList.do?page=${i}" class="current">${i}</a>
             </c:when>
             <c:otherwise>
