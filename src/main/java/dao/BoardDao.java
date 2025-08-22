@@ -199,6 +199,37 @@ public class BoardDao {
 	}
 	
 	
+	public int countSearchBoard(String searchType, String searchKeyword) {
+	    String sql = "SELECT COUNT(*) AS cnt FROM board b "
+	               + "LEFT JOIN members m ON b.memberid = m.memberid "
+	               + "WHERE " + searchType + " LIKE ?";
+	    int count = 0;
+
+	    try {
+	        Class.forName(driverName);
+	        conn = DriverManager.getConnection(url, username, password);
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, "%" + searchKeyword + "%");
+	        rs = pstmt.executeQuery();
+
+	        if(rs.next()) {
+	            count = rs.getInt("cnt");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if(rs != null) rs.close();
+	            if(pstmt != null) pstmt.close();
+	            if(conn != null) conn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return count;
+	}
+	
+	
 	
 	public void boardWrite(String btitle, String memberid, String bcontent) { // 게시판의 모든 글 리스트 가져오는 메소드
 		

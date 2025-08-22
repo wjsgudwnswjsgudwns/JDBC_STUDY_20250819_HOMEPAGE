@@ -49,44 +49,43 @@ public class BoardController extends HttpServlet {
 		HttpSession session = null;
 		
 		
-		if(comm.equals("/boardList.do")) {	// 글 목록
-			String searchType = request.getParameter("searchType");
-			String searchKeyword = request.getParameter("searchKeyword");
-			int page = 1; 
-			int totalBoardCount = boardDao.countBoard(); // 총 글의 갯수
-			
-			if(request.getParameter("page") == null) { // 링크 타고 게시판 들어온 경우
-	    		page = 1;
-	    	} else { // 유저가 보고 싶은 페이지 번호를 클릭한 경우
-	    		page = Integer.parseInt(request.getParameter("page")); // 유저가 클릭한 페이지 번호
-	    	}
-			List<BoardDto> boardDtos = boardDao.boardList(page);
-			
-			int totalPage = (int) Math.ceil((double)totalBoardCount/BoardDao.PAGE_SIZE); //총 글의 갯수로 표현 될 페이지의 수
-	    	int startPage = (((page-1)/BoardDao.PAGE_SIZE)*BoardDao.PAGE_SIZE) + 1;
-	    	int endPage = startPage + BoardDao.PAGE_SIZE -1;
-	    	
-	    	if(endPage > totalPage ) { // 계산한 endPage(20)가 totalPage(16)보다 크면 totalPage로 대체  
-	    		endPage = totalPage;
-	    	}
-	    	
-	    	request.setAttribute("boardDtos", boardDtos); // 유저가 선택한 페이지에 해당하는 글
-	    	request.setAttribute("currentPage", page); // 유저가 현재 선택한 페이지
-	    	request.setAttribute("totalPage", totalPage); // 총 글의 갯수로 표현 될 페이지의 수
-	    	request.setAttribute("startPage", startPage); // 시작 페이지
-	    	request.setAttribute("endPage", endPage); // 마지막 페이지
-			
-			if(searchType != null && searchKeyword != null && !searchKeyword.strip().isEmpty()) {
-				bDtos = boardDao.searchBoardList(searchKeyword, searchType, page);
-				
-				request.setAttribute("searchKeyword", searchKeyword);
-				request.setAttribute("searchType", searchType);
-			} else { // boardList.do로 넘어온 경우 -> 모든 게시판 리스트
-				bDtos = boardDao.boardList(page);
-			}
-			
-			request.setAttribute("bDtos", bDtos);
-			viewPage = "boardList.jsp";
+		if(comm.equals("/boardList.do")) {	
+		    String searchType = request.getParameter("searchType");
+		    String searchKeyword = request.getParameter("searchKeyword");
+		    int page = 1; 
+
+		    if(request.getParameter("page") != null) { 
+		        page = Integer.parseInt(request.getParameter("page"));
+		    }
+
+		    int totalBoardCount = 0;
+		    List<BoardDto> bDtos1 = new ArrayList<>();
+
+		    if(searchType != null && searchKeyword != null && !searchKeyword.strip().isEmpty()) {
+		        // ✅ 검색된 게시글 목록 & 개수
+		        bDtos1 = boardDao.searchBoardList(searchKeyword, searchType, page);
+		        totalBoardCount = boardDao.countSearchBoard(searchType, searchKeyword);
+		        request.setAttribute("searchKeyword", searchKeyword);
+		        request.setAttribute("searchType", searchType);
+		    } else {
+		        // ✅ 전체 게시글 목록 & 개수
+		        bDtos1 = boardDao.boardList(page);
+		        totalBoardCount = boardDao.countBoard();
+		    }
+
+		    // ✅ 검색/전체 여부에 맞춰서 페이지 계산
+		    int totalPage = (int) Math.ceil((double)totalBoardCount / BoardDao.PAGE_SIZE);
+		    int startPage = (((page - 1) / BoardDao.PAGE_SIZE) * BoardDao.PAGE_SIZE) + 1;
+		    int endPage = startPage + BoardDao.PAGE_SIZE - 1;
+		    if(endPage > totalPage) endPage = totalPage;
+
+		    request.setAttribute("bDtos", bDtos1);
+		    request.setAttribute("currentPage", page);
+		    request.setAttribute("totalPage", totalPage);
+		    request.setAttribute("startPage", startPage);
+		    request.setAttribute("endPage", endPage);
+
+		    viewPage = "boardList.jsp";
 		} else if(comm.equals("/modify.do")) {	// 글 수정
 			session = request.getSession();
 			String sid = (String)session.getAttribute("sessionId");
