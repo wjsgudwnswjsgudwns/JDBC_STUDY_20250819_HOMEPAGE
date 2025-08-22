@@ -95,12 +95,12 @@
 	<div class="pagination">
     <!-- 첫 페이지 -->
     <c:if test="${currentPage > 1}">
-        <a href="boardList.do?page=1" class="prev">◀◀</a>
+        <a href="boardList.do?page=1&searchType=${searchType}&searchKeyword=${searchKeyword}" class="prev">◀◀</a>
     </c:if>
 
     <!-- 이전 그룹 -->
     <c:if test="${startPage > 1}">
-        <a href="boardList.do?page=${startPage - 1}" class="prev">◀</a>
+        <a href="boardList.do?page=${startPage - 1}&searchType=${searchType}&searchKeyword=${searchKeyword}" class="prev">◀</a>
     </c:if>
 
     <!-- 페이지 번호 반복 -->
@@ -117,12 +117,12 @@
 
     <!-- 다음 그룹 -->
     <c:if test="${endPage < totalPage}">
-        <a href="boardList.do?page=${endPage + 1}" class="next">▶</a>
+        <a href="boardList.do?page=${endPage + 1}&searchType=${searchType}&searchKeyword=${searchKeyword}" class="next">▶</a>
     </c:if>
 
     <!-- 마지막 페이지 -->
     <c:if test="${currentPage < totalPage}">
-        <a href="boardList.do?page=${totalPage}" class="next">▶▶</a>
+        <a href="boardList.do?page=${totalPage}&searchType=${searchType}&searchKeyword=${searchKeyword}" class="next">▶▶</a>
     </c:if>
 	</div>
 

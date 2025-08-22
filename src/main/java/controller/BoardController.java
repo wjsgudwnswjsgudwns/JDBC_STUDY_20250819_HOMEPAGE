@@ -78,6 +78,9 @@ public class BoardController extends HttpServlet {
 			
 			if(searchType != null && searchKeyword != null && !searchKeyword.strip().isEmpty()) {
 				bDtos = boardDao.searchBoardList(searchKeyword, searchType, page);
+				
+				request.setAttribute("searchKeyword", searchKeyword);
+				request.setAttribute("searchType", searchType);
 			} else { // boardList.do로 넘어온 경우 -> 모든 게시판 리스트
 				bDtos = boardDao.boardList(page);
 			}
