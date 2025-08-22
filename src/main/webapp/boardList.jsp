@@ -34,7 +34,7 @@
 						<option value="bcontent" ${searchType == 'bcontent' ? 'selected' : '' }>내용</option>
 						<option value="b.memberid" ${searchType == 'b.memberid' ? 'selected' : '' }>작성자</option>
 					</select>
-					<input class="input" type="search" value="${searchKeyword ! = null ? searchKeyword : ''}" placeholder="검색어를 입력하세요" aria-label="게시글 검색" name="searchKeyword">
+					<input class="input" type="search" value="${searchKeyword != null ? searchKeyword : ''}" placeholder="검색어를 입력하세요" aria-label="게시글 검색" name="searchKeyword">
 					<input class="btn" type="submit" value="검색">
 				</div>
 				</form>
